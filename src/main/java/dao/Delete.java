@@ -20,19 +20,29 @@ public class Delete extends HttpServlet {
         HttpSession session = req.getSession();
 
         if(session.getAttribute("email") != null){
-            String partyId = (String) session.getAttribute("partyId");
-
+            int partyId = (int) session.getAttribute("partyId");
+            System.out.println(partyId);
             try {
                 Connection connection = DataBaseConnection.getConnection();
-
-                String query = "DELETE UserLogin , Party  FROM UserLogin  INNER JOIN Party  \n" +
-                        "WHERE UserLogin.partyId= Party.partyId and Party.partyId =" + partyId;
+                String forstop = "SET FOREIGN_KEY_CHECKS = 0";
+                Statement statement1 = connection.createStatement();
+                statement1.executeUpdate(forstop);
+                String query = "DELETE user,p " +
+                               "FROM UserLoginId user " +
+                               "INNER JOIN Party p " +
+                               "ON user.partyId=p.partyId " +
+                               "WHERE user.partyId="+partyId;
 
                 Statement statement = connection.createStatement();
                 statement.executeUpdate(query);
+
+                String forstart = "SET FOREIGN_KEY_CHECKS = 1";
+                Statement statement2 = connection.createStatement();
+                statement2.executeUpdate(forstart);
                 session.invalidate();
+
                 req.setAttribute("deleteMsg", "Profile Deleted Successfully");
-                RequestDispatcher requestDispatcher = req.getRequestDispatcher("registration.jsp");
+                RequestDispatcher requestDispatcher = req.getRequestDispatcher("registraion.jsp");
                 requestDispatcher.include(req, resp);
 
             } catch (ClassNotFoundException | SQLException e) {
