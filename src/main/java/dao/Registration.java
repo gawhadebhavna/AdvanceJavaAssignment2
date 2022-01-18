@@ -15,7 +15,7 @@ public class Registration{
             String password = login.getPassword();
 
             // Getting email and password from the database
-            String checkingEmail = "select userLoginId from UserLogin";
+            String checkingEmail = "select userLoginId from UserLoginId";
             Statement statement1 = connection.createStatement();
             ResultSet resultSet = statement1.executeQuery(checkingEmail);
 
@@ -34,7 +34,7 @@ public class Registration{
             if (flag) {
                 // Getting Max partyId from Database
                 Statement statement = connection.createStatement();
-                ResultSet result = statement.executeQuery("select MAX(partyId) as partyId from Party");
+                ResultSet result = statement.executeQuery("SELECT MAX(partyId) AS partyId FROM Party");
 
                 // Storing max value in variable Id
                 int partyId = -1;
@@ -46,7 +46,7 @@ public class Registration{
                 statement.close(); // Closing Statement
 
                 // Query for inserting values into Party table
-                String query = "INSERT INTO `Data_Modelling`.`Party` " +
+                String query = "INSERT INTO `DATA`.`Party` " +
                         "(`partyId`, `firstName`, `lastName`, `city`, `zip`, `state`, `country`, `phone`) " +
                         "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -61,7 +61,7 @@ public class Registration{
                 preparedStatement.setString(8, party.getPhone());
 
                 // Query for inserting values into UserLogin table
-                String loginQuery = "INSERT INTO `Data_Modelling`.`UserLogin` " +
+                String loginQuery = "INSERT INTO `DATA`.`UserLoginId` " +
                         "(`userLoginId`, `password`, `partyId`) " +
                         "VALUES (?, ?, ?)";
 

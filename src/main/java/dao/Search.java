@@ -21,29 +21,34 @@ public class Search extends HttpServlet {
 
         String firstName = req.getParameter("firstName");
         String lastName = req.getParameter("lastName");
+        int partyId = Integer.parseInt(req.getParameter("partyId"));
+        System.out.println(firstName);
+        ArrayList al = null;
 
         try {
             Connection connection = DataBaseConnection.getConnection();
-            String searchName = "select firstName, lastName from Party";
+            String searchName = "select firstName, lastName ,partyId from Party";
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(searchName);
 
-            ArrayList<String> searchResult = new ArrayList<>();
+            ArrayList searchResult = new ArrayList();
 
             // Checking if name entered by the user matches inside the database.
             while (resultSet.next()){
                 if(resultSet.getString("firstName").equalsIgnoreCase(firstName)
-                        && resultSet.getString("lastName").equalsIgnoreCase(lastName)){
+                        && resultSet.getString("lastName").equalsIgnoreCase(lastName)
+                        && resultSet.getString("partyId").equalsIgnoreCase(String.valueOf(partyId))){
 
                     // Fetches profile from DB based on user input
-                    String profileQuery = "SELECT * FROM Data_Modelling.Party Natural Join Data_Modelling.UserLogin where firstName ="
-                            +firstName+ "AND lastName =" +lastName;
+                    String profileQuery = "SELECT * FROM Party p INNER JOIN UserLoginId u " +
+                            "ON p.partyId = u.partyId WHERE firstName ='"+firstName+"'" +
+                            "AND lastName ='"+lastName+"' And p.partyId ='"+partyId+"'";
                     Statement statement1 = connection.createStatement();
                     System.out.println("Profile Query Executed");
                     ResultSet result = statement1.executeQuery(profileQuery);
 
                     if(result.next()){
-                        String email = result.getString("userLoginId");
+                        String email= result.getString("userLoginId");
                         String city = result.getString("city");
                         String zip = result.getString("zip");
                         String state = result.getString("state");
@@ -51,7 +56,7 @@ public class Search extends HttpServlet {
                         String phone = result.getString("phone");
 
                         HttpSession httpSession = req.getSession();
-                        httpSession.setAttribute("email", email);
+                        httpSession.setAttribute("partyId", partyId);
                         httpSession.setAttribute("firstName", firstName);
                         httpSession.setAttribute("lastName", lastName);
                         httpSession.setAttribute("city", city);
@@ -59,17 +64,35 @@ public class Search extends HttpServlet {
                         httpSession.setAttribute("state", state);
                         httpSession.setAttribute("country", country);
                         httpSession.setAttribute("phone", phone);
+
+                        System.out.println(firstName);
+
+                        al  = new ArrayList();
+
+                        al.add(result.getString(1));
+                        al.add(result.getString(2));
+                        al.add(result.getString(3));
+                        al.add(result.getString(4));
+                        al.add(result.getString(5));
+                        al.add(result.getString(6));
+                        al.add(result.getString(7));
+                        al.add(result.getString(8));
+                        al.add(result.getString(9));
+                        searchResult.add(al);
+
                     }
 
-                    RequestDispatcher requestDispatcher = req.getRequestDispatcher("profile.jsp");
-                    requestDispatcher.forward(req, resp);
+                    req.setAttribute("searchResult", searchResult);
+                    req.getRequestDispatcher("result.jsp").forward(req, resp);
+
+
                 } // If condition closed
             } // While Loop Closed
             PrintWriter out = resp.getWriter();
             out.println("No records found");
 
-            req.setAttribute("searchResult", searchResult);
-            req.getRequestDispatcher("/result.jsp").forward(req, resp);
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("profile.jsp");
+            requestDispatcher.forward(req, resp);
 
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
