@@ -2,7 +2,10 @@ package dao;
 
 import Pojo.UserLogin;
 import Service.DataBaseConnection;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 import java.sql.*;
 
 public class Login extends HttpServlet {
@@ -11,7 +14,7 @@ public class Login extends HttpServlet {
         try {
             Connection connection = DataBaseConnection.getConnection();
 
-            String query = "select userLoginId, password from UserLogin";
+            String query = "select userLoginId, password from UserLoginId";
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
 
@@ -19,11 +22,7 @@ public class Login extends HttpServlet {
                 // Checking if entered email & password are correct.
                 if (resultSet.getString("userLoginId").equalsIgnoreCase(login.getEmail())
                         && resultSet.getString("password").equals(login.getPassword())) {
-
-
-
-
-                    return true;
+                       return true;
                 }
             }
         } catch (ClassNotFoundException | SQLException e) {
