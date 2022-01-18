@@ -14,7 +14,7 @@
     <nav class="navbar navbar-dark bg-black">
         <div class="container">
             <span class="navbar-brand mb-0 h1"><img src="img/greet.gif" width="154" height="55"></span>
-            <a href="registration.jsp" class="btn btn-outline-success" role="button">Sign Up</a>
+            <a href="registraion.jsp" class="btn btn-outline-success" role="button">Sign Up</a>
         </div>
     </nav>
 
@@ -30,15 +30,15 @@
             <div class="col">
                 <main class="form-signin">
                     <form action="login" class="pt-5" METHOD="post">
-                        <h1 class="h3 mb-3 fw-normal">Member Login</h1>
+                        <h1 class="h3 mb-3 fw-normal">Login Here</h1>
                         <div></div>
 
-                        <div class="form-floating bg-black">
-                            <input type="email" class="form-control" name="email" placeholder="name@example.com" style="background-color:black">
+                        <div class="form-floating bg-dark">
+                            <input type="email" class="form-control" name="email" placeholder="name@example.com" style="background-color:#9baac2">
                             <label for="floatingInput">Email address</label>
                         </div>
                         <div class="form-floating">
-                            <input type="password" class="form-control" name="password" placeholder="Password" style="background-color:black">
+                            <input type="password" class="form-control" name="password" placeholder="Password" style="background-color:#9baac2">
                             <label for="floatingPassword">Password</label>
                             <span style="color:red;">
                             <%
