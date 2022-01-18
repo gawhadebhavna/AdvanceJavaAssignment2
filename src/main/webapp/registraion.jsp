@@ -81,7 +81,7 @@
                 </div>
 
                 <div class="col-12">
-                    <button type="submit" class="btn btn-primary">Sign Up</button>
+                    <button type="submit" class="btn btn-primary" id ="submitForm">Sign Up</button>
                 </div>
             </form>
         </div>
@@ -91,6 +91,9 @@
     </div>
 </div>
 
-
+<script>
+   $("#submitForm").click(function() {
+      alert("The Form has been Submitted.");
+   });
 </body>
 </html>
