@@ -27,19 +27,26 @@
                 <h1 class="h2 mb-3 fw-normal"><strong>Enter a name to search</strong></h1>
                 <form action="search" class="row g-3" method="post">
 
-                    <div class="col-md-6">
+                    <div class="form-row">
+                    <div class="col-5">
                         <label for="inputFirstName4" class="form-label">First Name</label>
                         <input type="text" class="form-control" id="inputFirstName4" name="firstName"
                             required>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-5">
                         <label for="inputLastName4" class="form-label">Last Name</label>
                         <input type="text" class="form-control" id="inputLastName4" name="lastName"
                             required>
                     </div>
+                    <div class="col-3" style="Padding-bottom:20px;">
+                        <label for="inputId4" class="form-label">ID</label>
+                        <input type="text" class="form-control" placeholder="Enter Id" name="partyId"
+                            required>
+                        </div>
                     <span>
                       <button type="submit" class="btn btn-primary btn-sm">Search</button>
                     </span>
+                    </div>
             </div>
             </form>
         </div>
